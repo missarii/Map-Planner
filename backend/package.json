@@ -1,0 +1,23 @@
+{
+  "name": "map-planner-backend",
+  "version": "1.0.0",
+  "description": "Koa + SQLite Backend for Map Planner",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "@koa/cors": "^5.0.0",
+    "@koa/router": "^12.0.1",
+    "koa": "^2.15.3",
+    "koa-bodyparser": "^4.4.1",
+    "koa-static": "^5.0.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
