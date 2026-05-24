@@ -368,7 +368,7 @@ h1, h2, h3, h4, h5, h6 {
   animation: modalSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* canvas-inner is the full 3000×3000 div used as a click-away target */
+/* canvas-inner: full 3000×3000 positioning layer for nodes */
 .canvas-inner {
-  pointer-events: none; /* children still receive events */
+  /* pointer-events intentionally NOT set here — nodes must receive all mouse events */
 }

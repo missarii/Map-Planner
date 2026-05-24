@@ -231,7 +231,8 @@ function FlowchartCanvas({ nodes, setNodes, links, setLinks }) {
           position: 'absolute',
           top: 0, left: 0,
           width: '3000px', height: '3000px',
-          pointerEvents: 'none',
+          /* NOTE: do NOT set pointerEvents:'none' here — it blocks ALL children in Chromium */
+          overflow: 'visible',
           zIndex: 1,
         }}
       >
@@ -257,13 +258,13 @@ function FlowchartCanvas({ nodes, setNodes, links, setLinks }) {
           const isHovered = hoveredLinkId === link.id;
 
           return (
-            <g key={link.id} style={{ pointerEvents: 'visibleStroke' }}>
-              {/* Wide transparent hit area */}
+            <g key={link.id}>
+              {/* Wide near-invisible hit area — 'transparent' is ignored by browsers for hit-testing */}
               <path
                 d={path}
                 fill="none"
-                stroke="transparent"
-                strokeWidth="18"
+                stroke="rgba(0,0,0,0.001)"
+                strokeWidth="20"
                 style={{ cursor: 'pointer', pointerEvents: 'stroke' }}
                 onMouseEnter={() => setHoveredLinkId(link.id)}
                 onMouseLeave={() => setHoveredLinkId(null)}
@@ -271,7 +272,7 @@ function FlowchartCanvas({ nodes, setNodes, links, setLinks }) {
                   if (confirm('Delete this connection?')) deleteLink(link.id);
                 }}
               />
-              {/* Visible glow line */}
+              {/* Visible glow line — pointer-events:none so only the hit-path above is interactive */}
               <path
                 d={path}
                 fill="none"
@@ -280,11 +281,11 @@ function FlowchartCanvas({ nodes, setNodes, links, setLinks }) {
                 strokeDasharray="8,5"
                 markerEnd="url(#arrowhead)"
                 style={{
+                  pointerEvents: 'none',
                   filter: isHovered
                     ? 'drop-shadow(0 0 6px var(--accent-rose))'
                     : 'drop-shadow(0 0 3px rgba(255,255,255,0.2))',
                   animation: 'dash 1.5s linear infinite',
-                  strokeDashoffset: 0,
                   transition: 'stroke 0.2s, stroke-width 0.2s',
                 }}
               />
